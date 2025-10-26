@@ -1040,6 +1040,499 @@ For the example, after elimination:
 - **Skew-Hermitian Matrix:** Complex matrix equal to negative of its conjugate transpose.
 
 
+# Eigenvalues and Eigenvectors
+
+## Definiton
+
+An **eigenvector** of a square matrix $A$ is a non-zero vector $x$ such that $Ax = \lambda x$, where $\lambda$ is a scalar known as the **eigenvalue**. In essence, eigenvectors represent directions in which the action of the matrix is a simple stretching or compression by a factor of $\lambda$.
+
+### Key Properties
+
+- A matrix may have real or complex eigenvalues.
+- The collection of all eigenvectors corresponding to distinct eigenvalues are linearly independent.
+- The **characteristic equation** is given by $\det(A - \lambda I) = 0$.
+
+## Existence of an Eigenbasis and Diagonalization
+
+A matrix $A$ is **diagonalizable** if it has a basis of eigenvectors called an **eigenbasis**. This means that $A = P D P^{-1}$, where $D$ is a diagonal matrix with eigenvalues of $A$ on the diagonal, and $P$ contains the corresponding eigenvectors as its columns.
+
+### Eigenspaces and Geometric Multiplicity
+
+Given a square matrix $A$ acting on a vector space $V$, an **eigenspace** corresponding to an eigenvalue $\lambda$ is defined as: $E_\lambda = \{ v \in V \mid A v = \lambda v \}$.
+
+This is equivalent to the kernel (null space) of $A - \lambda I$, meaning: $E_\lambda = \text{ker}(A - \lambda I)$.
+
+The **geometric multiplicity** of an eigenvalue $\lambda$ is the dimension of its eigenspace; it tells us how many linearly independent eigenvectors correspond to $\lambda$.
+
+Each eigenspace forms a subspace, and eigenvectors associated with **distinct eigenvalues** are always linearly independent. Hence, the sum of the dimensions of all eigenspaces cannot exceed the size $n$ of the space.
+
+### Existence of an Eigenbasis
+
+An **eigenbasis** is a basis for the entire space formed by linearly independent eigenvectors of $A$. This happens *if and only if* the sum of the geometric multiplicities of all eigenvalues equals $n$, the dimension of the space: $\sum_{i=1}^k \text{dim}(E_{\lambda_i}) = n$, where $\lambda_1, \ldots, \lambda_k$ are the distinct eigenvalues of $A$.
+
+If this condition is satisfied, the matrix is said to be **diagonalizable**, and an eigenbasis exists. Conversely, if the sum is less than $n$, no eigenbasis can be formed, and the matrix cannot be diagonalized.
+
+### Connection Between Eigenbasis and Diagonalization
+
+A matrix $A$ is **diagonalizable** if it has an eigenbasis. This means there exists an invertible matrix $P$ whose columns are the eigenvectors of $A$, and a diagonal matrix $D$ such that: $A = P D P^{-1}$.
+
+Here, $D$ has the eigenvalues of $A$ on its diagonal. The diagonalization theorem thus states:
+
+**Theorem:** A matrix $A$ is diagonalizable if and only if it has $n$ linearly independent eigenvectors — equivalently, if it admits an eigenbasis.
+
+### Examples and Observations
+
+- **Diagonal matrices** are trivially diagonalizable; their standard basis vectors form an eigenbasis with the diagonal entries as eigenvalues.
+- **Symmetric matrices** over real numbers always have an eigenbasis due to the spectral theorem — their eigenvectors can be chosen orthogonal.
+- **Defective matrices** (e.g., having repeated eigenvalues but insufficient independent eigenvectors) **do not** have an eigenbasis. For example, a matrix with a double eigenvalue but only one eigenvector cannot be diagonalized.
+
+### Geometric Interpretation
+
+When an eigenbasis exists, the linear transformation represented by $A$ acts simply as a **stretching** operation along each eigendirection. Transforming to the eigenbasis “aligns” the coordinate system with these natural directions, and in this basis, the action of $A$ becomes purely scalar multiplication along each coordinate axis.
+
+## Real Spectral Theorem
+
+The **spectral theorem** provides a crucial result for symmetric matrices:
+
+- Every real symmetric matrix can be orthogonally diagonalized.
+- All its eigenvalues are real, and there exists an orthonormal basis of eigenvectors.
+
+Formally, if $A$ is symmetric, then: $A = P D P^T$, where $P$ is an orthogonal matrix ($P^T P = I$) and $D$ is a diagonal matrix of eigenvalues.
+
+This theorem has fundamental implications in physics and machine learning (e.g., Principal Component Analysis).
+
+## Singular Value Decomposition (SVD)
+
+The **singular value decomposition** generalizes diagonalization for any $m \times n$ matrix $A$: $A = U \Sigma V^T$,where:
+
+- $U$ is an $m \times m$ orthogonal matrix,
+- $V$ is an $n \times n$ orthogonal matrix,
+- $\Sigma$ is an $m \times n$ diagonal matrix with nonnegative **singular values** on the diagonal.
+
+Each singular value corresponds to the length of the semiaxes of the ellipsoid obtained by transforming the unit sphere with $A$. This decomposition is vital in data compression and numerical optimization.
+
+### Step-by-Step Instruction
+
+**Step 1: Compute $A^T A$ and $A A^T$**
+
+Start with your matrix $A$ of size $m \times n$:
+
+1. Compute $A^T A$ (an $n \times n$ matrix).  
+2. Compute $A A^T$ (an $m \times m$ matrix).  
+
+These two matrices are **symmetric** and **positive semidefinite**, which guarantees real, nonnegative eigenvalues.
+
+
+**Step 2: Find Eigenvalues and Singular Values**
+
+1. Solve the **eigenvalue problem** for $A^T A$: $A^T A v_i = \lambda_i v_i$
+2. The **singular values** of $A$ are the square roots of these eigenvalues: $\sigma_i = \sqrt{\lambda_i}$. The singular values are always nonnegative and are arranged in **descending order** in $\Sigma$.
+
+**Step 3: Compute the Right Singular Vectors ($V$)**
+
+The normalized eigenvectors $v_i$ from $A^T A$ form the columns of $V$: $V = [v_1, v_2, \ldots, v_n]$. Since eigenvectors corresponding to distinct eigenvalues are orthogonal, $V$ is an **orthogonal matrix** ($V^T V = I$).
+
+**Step 4: Compute the Left Singular Vectors ($U$)**
+
+For each singular value $\sigma_i$ and corresponding right singular vector $v_i$, compute: $u_i = \frac{1}{\sigma_i} A v_i$.
+These $u_i$ become the columns of the matrix $U$, and they form an orthonormal basis for the column space of $A$.  
+If $A$ has rank $r < \min(m, n)$, additional orthonormal columns are added to $U$ to make it square.
+
+**Step 5: Form the Diagonal Matrix $\Sigma$**
+
+Construct the $m \times n$ diagonal matrix $\Sigma$ such that: $\Sigma_{ii} = \sigma_i$. All off-diagonal entries are 0. If $m > n$, there will be zero rows at the bottom; if $n > m$, there will be zero columns on the right.
+
+**Step 6: Verify the Decomposition**
+
+Check that: $A = U \Sigma V^T$.
+
+This verification ensures the correctness of your SVD. The columns of $U$ represent orthonormal directions in the input space, and those of $V$ represent orthonormal directions in the output space.
+
+### Illustration Example (Conceptual)
+
+Let:
+
+$$
+A = 
+\begin{bmatrix}
+3 & 2 & 2 \\
+2 & 3 & -2
+\end{bmatrix}
+$$
+
+Following the above steps yields:
+
+$$
+A = U \Sigma V^T
+$$
+
+where:
+
+$$
+U = 
+\begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+\end{bmatrix}, \quad
+\Sigma = 
+\begin{bmatrix}
+5 & 0 & 0 \\
+0 & 3 & 0
+\end{bmatrix}, \quad
+V = 
+\begin{bmatrix}
+\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} & 0 \\
+\frac{1}{\sqrt{18}} & -\frac{1}{\sqrt{18}} & \frac{4}{\sqrt{18}} \\
+\frac{2}{3} & -\frac{2}{3} & \frac{1}{3}
+\end{bmatrix}
+$$
+
+### Geometric Meaning
+
+- $V$ rotates the coordinate system to align with principal axes.
+- $\Sigma$ scales space along those axes by factors $\sigma_i$.
+- $U$ rotates or flips the space to match the transformation output.  
+
+Thus, SVD describes **how any matrix transforms space**: as a rotation, followed by stretching, then another rotation.
+
+## Positive Definite Matrices
+
+A symmetric matrix $A$ is **positive definite** if: $x^T A x > 0 \quad \text{for all nonzero vectors } x$.
+
+Equivalently, all its eigenvalues are positive. Properties include:
+
+- The determinant of a positive definite matrix is always positive.
+- It admits a unique positive definite matrix square root.
+- The inverse of a positive definite matrix is itself positive definite.
+
+Such matrices model energy, covariance, and metric structures in applied contexts.
+
+## Determinant: Geometric Meaning and Invariance
+
+The **determinant** of a square matrix measures how volume or area changes under the associated linear transformation. Specifically:
+
+- In 2D, $|\det(A)|$ gives the area scaling factor of the parallelogram formed by the transformation.
+- In 3D, $|\det(A)|$ gives the volume scaling factor of the transformed parallelepiped.
+
+### Invariance
+
+The determinant’s value changes by the same scalar multiple as the product of eigenvalues. It remains invariant under:
+
+- row/column operations that preserve linear independence,
+- similarity transformations ($\det(A) = \det(P^{-1}AP)$).
+
+A zero determinant indicates that the transformation collapses space, meaning the matrix is singular.
+
+# Decompositions
+
+## LU (Lower-Upper factorization)
+
+### Definition
+
+The **LU decomposition** (Lower–Upper factorization) expresses a square matrix $A$ as the product of two triangular matrices: $A = L \times U$, where:
+
+- $L$ is a **lower triangular matrix** with 1s on the diagonal,  
+- $U$ is an **upper triangular matrix**.
+
+This technique is primarily used to solve systems of linear equations, calculate determinants, and find matrix inverses efficiently.
+
+### Step-by-Step Construction
+
+1. **Start with a square matrix $A$:**  $A = [a_{ij}]_{n \times n}$
+
+2. **Apply Gaussian elimination** to transform $A$ into an upper-triangular form $U$.  
+   Record the multipliers used to eliminate elements below the diagonal — these form the off-diagonal entries in $L$.
+
+3. **Form matrices:**  
+   - $U$ is the resulting upper-triangular matrix.  
+   - $L$ contains the elimination multipliers with 1s on the diagonal.
+
+4. **Verify:**  
+   Check $A = L U$ to ensure correctness.
+
+Example:
+$$
+A = 
+\begin{bmatrix}
+4 & 3 \\
+6 & 3
+\end{bmatrix},
+\quad
+L = 
+\begin{bmatrix}
+1 & 0 \\
+1.5 & 1
+\end{bmatrix},
+\quad
+U = 
+\begin{bmatrix}
+4 & 3 \\
+0 & -1.5
+\end{bmatrix}.
+$$
+Then $A = L U$.
+
+### Applications
+
+- Fast solution of $A x = b$ using two triangular solves: $L y = b$, then $U x = y$.
+- Efficient calculation of determinants via $\det(A) = \det(L)\det(U)$.
+- Foundation for the **Cholesky** and **QR** methods.
+
+## QR Decomposition
+
+### Definition
+
+The **QR decomposition** expresses a matrix $A$ (not necessarily square) as: $A = Q R$, where:
+
+- $Q$ is an orthogonal (or unitary) matrix $(Q^T Q = I)$,  
+- $R$ is an upper triangular matrix.
+
+### Method
+
+1. **Use the Gram–Schmidt process** on the columns of $A$ to create orthonormal vectors forming $Q$.
+2. **Compute $R$** as: $R = Q^T A$
+
+This decomposition is especially suited to solving least squares problems and is numerically stable.
+
+### Example
+
+Let
+
+$$
+A = 
+\begin{bmatrix}
+1 & 1 \\
+1 & -1
+\end{bmatrix}.
+$$
+
+Applying Gram–Schmidt:
+
+$$
+Q =
+\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+1 & 1 \\
+1 & -1
+\end{bmatrix},
+\quad
+R =
+\begin{bmatrix}
+\sqrt{2} & 0 \\
+0 & \sqrt{2}
+\end{bmatrix}.
+$$
+
+### Applications
+
+- Solving $A x = b$ when $A$ is tall (least squares).
+- Numerical stability in regression and PCA.
+- Finding eigenvalues via iterative algorithms.
+
+## Cholesky Decomposition
+
+### Definition
+
+The **Cholesky decomposition** is a special case of LU factorization for **symmetric positive definite** matrices: $A = L L^T$, where $L$ is a lower triangular matrix with positive diagonal entries.
+
+### Steps
+
+1. Ensure $A$ is symmetric and positive definite ($x^T A x > 0$ for all nonzero $x$).
+2. Compute entries of $L$ as:
+   $$
+   L_{ii} = \sqrt{A_{ii} - \sum_{k=1}^{i-1} L_{ik}^2}
+   $$
+
+   $$
+   L_{ij} = \frac{1}{L_{jj}} \left( A_{ij} - \sum_{k=1}^{j-1} L_{ik} L_{jk} \right)
+   $$
+
+3. Return $A = L L^T$.
+
+### Example
+
+$$
+A = 
+\begin{bmatrix}
+4 & 12 & -16 \\
+12 & 37 & -43 \\
+-16 & -43 & 98
+\end{bmatrix}
+\Rightarrow
+L =
+\begin{bmatrix}
+2 & 0 & 0 \\
+6 & 1 & 0 \\
+-8 & 5 & 3
+\end{bmatrix}.
+$$
+
+### Applications
+
+- Solving symmetric systems more efficiently than LU.
+- Covariance modeling in statistics.
+- Basis of optimization methods in machine learning (e.g., Gaussian processes).
+
+## Eigendecomposition
+
+### Definition
+
+The **eigendecomposition** expresses a square matrix $A$ as: $A = P \Lambda P^{-1}$, where:
+
+- $\Lambda$ is diagonal containing the **eigenvalues** of $A$,  
+- $P$ contains the corresponding **eigenvectors** as columns.
+
+This decomposition exists when $A$ has $n$ linearly independent eigenvectors (i.e., is diagonalizable).
+
+### Steps
+
+1. Compute the **characteristic polynomial**: $\det(A - \lambda I) = 0$.
+2. Find eigenvalues $\lambda_i$ and corresponding eigenvectors $v_i$.
+3. Construct: $P = [v_1, v_2, \ldots, v_n], \quad \Lambda = \text{diag}(\lambda_1, \lambda_2, \ldots, \lambda_n).$
+
+   Then $A = P \Lambda P^{-1}$.
+
+### Example
+
+$$
+A = 
+\begin{bmatrix}
+2 & 1 \\
+1 & 2
+\end{bmatrix}
+\Rightarrow
+\Lambda = 
+\begin{bmatrix}
+3 & 0 \\
+0 & 1
+\end{bmatrix},
+\quad
+P = 
+\begin{bmatrix}
+1 & 1 \\
+1 & -1
+\end{bmatrix}.
+$$
+
+### Applications
+
+- Fundamental to the **spectral theorem** for symmetric matrices.
+- Used in **Principal Component Analysis (PCA)**.
+- Forms the basis of the **Singular Value Decomposition (SVD)**.
+
+
+### Comparative Table
+
+| Decomposition | Form | Matrix Type | Purpose | Notes |
+|----------------|------|--------------|----------|--------|
+| LU | $A = L U$ | Any square $A$ | Solving $A x = b$ | Based on Gaussian elimination |
+| QR | $A = Q R$ | Any real $A$ | Least-squares, PCA | Uses orthogonalization |
+| Cholesky | $A = L L^T$ | Symmetric positive definite | Fast & stable for symmetric systems | Special LU case |
+| Eigen | $A = P \Lambda P^{-1}$ | Diagonalizable $A$ | Spectral analysis, PCA | Relates to SVD |
+
+These decompositions provide complementary ways to simplify and analyze matrices—each suited for different matrix structures and computational goals in applied linear algebra and data analysis.
+
+
+# Core Analysis
+
+## Open and Closed Sets
+
+### Definition
+
+In a metric or topological space $(X, d)$:
+
+- A set $U \subseteq X$ is **open** if, for every point $x \in U$, there exists a radius $r > 0$ such that the entire open ball $B_r(x) = \{ y \in X : d(x, y) < r \} \subseteq U$.
+- A set $F \subseteq X$ is **closed** if it contains all its limit points; equivalently, its complement $X \setminus F$ is open.
+
+Some sets can be both open and closed; these are called **clopen sets**.
+
+### Examples (in $\mathbb{R}$)
+
+- $(0,1)$ is open.
+- $(0,1]$ is neither open nor closed.
+- $\mathbb{R}$ and $\emptyset$ are both clopen.
+
+### Properties
+
+- The union of any collection of open sets is open.
+- The intersection of finitely many open sets is open.
+- The complement of an open set is closed (and vice versa).
+- A set is closed iff every convergent sequence in it has its limit also in it.
+
+## Continuity
+
+### Definition
+
+A function $f: X \to Y$ between metric spaces is **continuous at a point** $a \in X$ if:
+
+$$\forall \varepsilon > 0, \exists \delta > 0 \text{ such that } d_X(x, a) < \delta \Rightarrow d_Y(f(x), f(a)) < \varepsilon.$$
+
+Equivalently, $f$ is continuous if and only if the preimage of every open set in $Y$ is open in $X$.
+
+### Key Theorems
+
+- **Composition Theorem:** The composition of continuous functions is continuous.
+- **Extreme Value Theorem:** A continuous function on a closed and bounded interval $[a,b]$ achieves maximum and minimum values.
+- **Intermediate Value Theorem:** If $f$ is continuous on $[a,b]$, it takes every value between $f(a)$ and $f(b)$.
+
+## Sequences and Convergence
+
+### Definition of a Sequence
+
+A **sequence** is a function $a: \mathbb{N} \to \mathbb{R}$, denoted $(a_n)_{n=1}^{\infty}$.
+
+It is a fundamental building block for calculus and real analysis, used to define limits, continuity, and compactness.
+
+### Convergent Sequences
+
+A sequence $(a_n)$ **converges** to a limit $L \in \mathbb{R}$ if:
+
+$$\forall \varepsilon > 0, \exists N \in \mathbb{N} \text{ such that } |a_n - L| < \varepsilon \text{ for all } n > N.$$
+
+We write $\lim_{n \to \infty} a_n = L$.
+
+### Divergent and Bounded Sequences
+
+- A sequence is **divergent** if it does not converge to any finite limit.
+- A sequence is **bounded** if there exists $M > 0$ such that $|a_n| \le M$ for all $n$.
+
+Examples:
+
+- $a_n = \frac{1}{n} \to 0$ (convergent).
+- $a_n = (-1)^n$ (divergent).
+- $a_n = n$ (diverges to infinity).
+
+## Limits and Their Properties
+
+### Definition ($\varepsilon - \delta$ Form)
+
+For a real function $f: \mathbb{R} \to \mathbb{R}$, the **limit** of $f(x)$ as $x \to a$ equals $L$ if:
+
+$$\forall \varepsilon > 0, \exists \delta > 0 \text{ such that } |x - a| < \delta \Rightarrow |f(x) - L| < \varepsilon.$$
+
+Denoted: $\lim_{x \to a} f(x) = L$.
+
+### One-Sided Limits
+
+- **Right-hand limit:** $\lim_{x \to a^+} f(x)$
+- **Left-hand limit:** $\lim_{x \to a^-} f(x)$
+
+If both exist and are equal, the two-sided limit exists.
+
+### Limit Laws
+
+If $\lim_{x \to a} f(x) = L_1$ and $\lim_{x \to a} g(x) = L_2$, then:
+
+- $\lim_{x \to a} [f(x) + g(x)] = L_1 + L_2$
+- $\lim_{x \to a} [c f(x)] = c L_1$
+- $\lim_{x \to a} [f(x) g(x)] = L_1 L_2$
+- $\lim_{x \to a} [f(x)/g(x)] = L_1 / L_2$, provided $L_2 \neq 0$.
+
+### Sequential Criterion for Limits
+
+A limit $\lim_{x \to a} f(x) = L$ exists **iff** for every sequence $(x_n)$ converging to $a$ (excluding $x_n = a$), the sequence $f(x_n)$ converges to $L$. This connects **sequences** and **function limits**.
+
+
 # Notations 
 
 | Notation                                 | Description                                                | Example/Meaning                                               |
