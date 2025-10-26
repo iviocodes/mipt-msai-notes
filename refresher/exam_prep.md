@@ -1533,6 +1533,368 @@ If $\lim_{x \to a} f(x) = L_1$ and $\lim_{x \to a} g(x) = L_2$, then:
 A limit $\lim_{x \to a} f(x) = L$ exists **iff** for every sequence $(x_n)$ converging to $a$ (excluding $x_n = a$), the sequence $f(x_n)$ converges to $L$. This connects **sequences** and **function limits**.
 
 
+# Univariate calculus
+
+## Derivatives and Their Properties
+
+### Definition
+
+The **derivative** of a real-valued function $f(x)$ at a point $x = a$ is defined as the limit:
+$$f'(a) = \lim_{h \to 0} \frac{f(a + h) - f(a)}{h}$$
+
+if this limit exists. It measures the **instantaneous rate of change** of $f$ with respect to $x$, or geometrically, the **slope of the tangent line** at $(a, f(a))$.
+
+### Interpretation
+
+- If $f'(x) > 0$: $f$ is **increasing** at $x$.
+- If $f'(x) < 0$: $f$ is **decreasing** at $x$.
+- If $f'(x) = 0$: $x$ may be a **local extremum** (maximum, minimum, or plateau).
+
+### Fundamental Properties
+
+1. **Linearity:**  $(a f + b g)' = a f' + b g'$
+2. **Product rule:**  $(f g)' = f' g + f g'$
+3. **Quotient rule:**  $\left( \frac{f}{g} \right)' = \frac{f' g - f g'}{g^2}, \quad g(x) \neq 0$
+4. **Chain rule:**  If $y = f(g(x))$, then  $\frac{dy}{dx} = f'(g(x)) g'(x)$
+
+### Higher-Order Derivatives
+
+The **second derivative** $f''(x)$ describes the concavity of a function:
+- $f''(x) > 0$: function is **concave upward** (convex).
+- $f''(x) < 0$: function is **concave downward**.
+- $f''(x) = 0$: possible inflection point.
+
+## Rules for Differentiation
+
+| Rule Name                  | Formula                                                                                 | Description / Definition                                                           | Example                                                                                                          |
+| -------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Constant Rule**          | $\frac{d}{dx}[c] = 0$                                                                   | The derivative of a constant is zero.                                              | $\frac{d}{dx}[10] = 0$                                                                                           |
+| **Constant Multiple Rule** | $\frac{d}{dx}[c\,f(x)] = c\,f'(x)$                                                      | A constant multiplier can be factored out of the derivative.                       | $\frac{d}{dx}[5x^3] = 5 \cdot 3x^2 = 15x^2$                                                                      |
+| **Sum Rule**               | $\frac{d}{dx}[f(x) + g(x)] = f'(x) + g'(x)$                                             | The derivative of a sum equals the sum of the derivatives.                         | $\frac{d}{dx}[x^2 + \sin x] = 2x + \cos x$                                                                       |
+| **Difference Rule**        | $\frac{d}{dx}[f(x) - g(x)] = f'(x) - g'(x)$                                             | The derivative of a difference equals the difference of the derivatives.           | $\frac{d}{dx}[x^3 - e^x] = 3x^2 - e^x$                                                                           |
+| **Power Rule**             | $\frac{d}{dx}[x^n] = n x^{n-1}$                                                         | The derivative of a power of $x$ multiplies by the exponent, reducing it by one.   | $\frac{d}{dx}[x^4] = 4x^3$                                                                                       |
+| **Product Rule**           | $\frac{d}{dx}[f(x)g(x)] = f'(x)g(x) + f(x)g'(x)$                                        | Used for products of two differentiable functions.                                 | $\frac{d}{dx}[x^2 e^x] = 2x e^x + x^2 e^x$                                                                       |
+| **Quotient Rule**          | $\frac{d}{dx}\!\left[\frac{f(x)}{g(x)}\right] = \frac{f'(x)g(x) - f(x)g'(x)}{[g(x)]^2}$ | Used for quotients of functions when $g(x) \neq 0$.                                | $\frac{d}{dx}\!\left[\frac{2x}{x^2+1}\right] = \frac{2(x^2+1) - 2x(2x)}{(x^2+1)^2} = \frac{2 - 2x^2}{(x^2+1)^2}$ |
+| **Reciprocal Rule**        | $\frac{d}{dx}\!\left[\frac{1}{f(x)}\right] = -\frac{f'(x)}{[f(x)]^2}$                   | A special case of the quotient rule for $1/f(x)$.                                  | $\frac{d}{dx}[1/x] = -1/x^2$                                                                                     |
+| **Chain Rule**             | $\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)$                                          | Used to differentiate composite functions (“outer derivative × inner derivative”). | $\frac{d}{dx}[\sin(x^2)] = \cos(x^2) \cdot 2x = 2x\cos(x^2)$                                                     |
+
+
+| Function $$ f(x) $$ | Derivative $$ f'(x) $$      | Notes / Example                         |
+| ------------------- | --------------------------- | --------------------------------------- |
+| $c$                 | $0$                         | Constant function                       |
+| $x^n$               | $n x^{n-1}$                 | $n$ any real number                     |
+| $e^x$               | $e^x$                       | Exponential (base $e$)                  |
+| $a^x$               | $a^x \ln a$                 | $a > 0, a \neq 1$                       |
+| $\ln x$             | $\frac{1}{x}$               | Domain: $x > 0$                         |
+| $\log_a x$          | $\frac{1}{x \ln a}$         | Base-$a$ logarithm                      |
+| $\sin x$            | $\cos x$                    | Periodic function                       |
+| $\cos x$            | $-\sin x$                   | Periodic function                       |
+| $\tan x$            | $\sec^2 x$                  | Undefined at $x = \frac{\pi}{2} + k\pi$ |
+| $\sec x$            | $\sec x \tan x$             | Trig reciprocal rule                    |
+| $\csc x$            | $-\csc x \cot x$            | Trig reciprocal rule                    |
+| $\cot x$            | $-\csc^2 x$                 | Periodic function                       |
+| $\arcsin x$         | $\frac{1}{\sqrt{1 - x^2}}$  | Domain $-1 < x < 1$                     |
+| $\arccos x$         | $-\frac{1}{\sqrt{1 - x^2}}$ | Domain $-1 < x < 1$                     |
+| $\arctan x$         | $\frac{1}{1 + x^2}$         | Valid for all real $x$                  |
+
+## Extreme Values
+
+### Definition
+
+An **extreme value** of a function $f(x)$ occurs at a point where $f(x)$ is either **maximum** or **minimum** relative to nearby points.
+
+- **Local maximum:** $f(a) \ge f(x)$ for all $x$ near $a$.
+- **Local minimum:** $f(a) \le f(x)$ for all $x$ near $a$.
+- **Global (absolute) extremum:** $f(a) \ge f(x)$ or $f(a) \le f(x)$ for all $x$ in the domain.
+
+### Critical Points
+
+If $f'(x) = 0$ or $f'(x)$ is undefined, $x$ is a **critical point** — a candidate for extrema.
+
+#### First Derivative Test
+
+- If $f'(x)$ changes from positive to negative → local **maximum**.
+- If $f'(x)$ changes from negative to positive → local **minimum**.
+
+#### Second Derivative Test
+
+At $x = a$:
+- If $f'(a) = 0$ and $f''(a) > 0$: **local minimum**.
+- If $f'(a) = 0$ and $f''(a) < 0$: **local maximum**.
+
+### The Extreme Value Theorem (EVT)
+
+The **Extreme Value Theorem** states that if $f$ is **continuous on a closed and bounded interval** $[a,b]$, then there exist points $c, d \in [a,b]$ such that: $f(c) \le f(x) \le f(d), \quad \forall x \in [a,b]$. This means that $f$ attains both a maximum and a minimum value within the interval.
+
+#### Example
+
+Find the maximum and minimum values of $f(x) = x^4 - 3x^3 - 1$ on the interval $[-2, 2]$.
+
+**Step 1: Check conditions**
+
+The function $f(x) = x^4 - 3x^3 - 1$ is a polynomial, so it is continuous and differentiable everywhere. Therefore, it satisfies the conditions for EVT on $[-2, 2]$.
+
+**Step 2: Find the derivative**
+
+$$
+f'(x) = 4x^3 - 9x^2 = x^2(4x - 9)
+$$
+
+Setting $f'(x) = 0$:
+
+$$
+x^2(4x - 9) = 0 \Rightarrow x = 0 \text{ or } x = \frac{9}{4}
+$$
+
+Only $x = 0$ lies in $[-2, 2]$.
+
+**Step 3: Evaluate endpoints and critical points**
+
+$$
+f(-2) = (-2)^4 - 3(-2)^3 - 1 = 16 + 24 - 1 = 39
+$$
+
+$$
+f(0) = 0 - 0 - 1 = -1
+$$
+
+$$
+f(2) = (2)^4 - 3(2)^3 - 1 = 16 - 24 - 1 = -9
+$$
+
+**Step 4: Identify extreme values**
+
+- Maximum value: $f(-2) = 39$
+- Minimum value: $f(2) = -9$
+
+Thus, by the **Extreme Value Theorem**, the function $f(x) = x^4 - 3x^3 - 1$ attains its **maximum of 39 at $x = -2$** and **minimum of -9 at $x = 2$** on the interval $[-2, 2]$.
+
+## Series Expansion
+
+### Definition
+
+Series expansion is a method in calculus that approximates a smooth function with an infinite sum of polynomial terms. It allows us to represent complex functions as combinations of powers of $(x - a)$, based on the values of the function’s derivatives at a single point.
+
+### Concept of Series Expansion
+
+A function $f(x)$ that is differentiable many times around a point $a$ can be written as:
+
+$$
+f(x) = f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \frac{f'''(a)}{3!}(x - a)^3 + \cdots
+$$
+
+This infinite sum is called the **Taylor series** of $f(x)$ about the point $a$.
+
+### Taylor Series Formula
+
+Formally, the **Taylor series expansion** of a function $f(x)$ around $x = a$ is:
+
+$$
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n
+$$
+
+where  
+- $f^{(n)}(a)$ is the $n$th derivative of $f$ evaluated at $a$,  
+- $n!$ (factorial) ensures proper weighting for each degree term.
+
+### Maclaurin Series
+
+The **Maclaurin series** is a specific case of the Taylor series where $a = 0$:
+
+$$
+f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots
+$$
+
+It is often used because many functions have simple derivatives at $x = 0$.
+
+### Common Maclaurin Series Expansions
+
+| Function | Series Expansion | Radius of Convergence |
+|-----------|------------------|------------------------|
+| $e^x$ | $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots$ | $\infty$ |
+| $\sin x$ | $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots$ | $\infty$ |
+| $\cos x$ | $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots$ | $\infty$ |
+| $\ln(1 + x)$ | $x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots$ | $\mid x \mid < 1$ |
+| $\frac{1}{1 - x}$ | $1 + x + x^2 + x^3 + \cdots$ | $\mid x \mid < 1$ |
+| $(1 + x)^r$ | $1 + rx + \frac{r(r - 1)}{2!}x^2 + \cdots$ | $\mid x \mid < 1$ |
+
+### Applications
+
+- **Approximation**: Estimate function values using the first few terms.
+- **Simplification**: Replace complicated functions with polynomials in analysis.
+- **Solving equations**: Simplify transcendental equations near specific points.
+- **Physics and Engineering**: Used for small-angle approximations, motion equations, etc.
+
+### Convergence
+
+When working with power series or Taylor/Maclaurin expansions, not all series converge (i.e., give meaningful results) for all values of $$ x $$. Understanding **convergence** and **radius of convergence** helps determine **where a series approximation is valid**.
+
+#### What Is Convergence?
+
+A power series has the general form:
+
+$$
+\sum_{n=0}^{\infty} c_n (x - a)^n = c_0 + c_1(x - a) + c_2(x - a)^2 + \cdots
+$$
+
+For a specific value of $x$, the series is said to **converge** if the infinite sum approaches a finite limit.   Formally, the partial sums sequence  
+$$
+S_N = \sum_{n=0}^{N} c_n (x - a)^n
+$$
+**converges** if  
+$$
+\lim_{N \to \infty} S_N = L
+$$
+for some finite $L$.
+
+If this limit does not exist or is infinite, the series **diverges** for that $x$.
+
+#### Example
+
+The series $1 + x + x^2 + x^3 + \cdots$ converges only when $\mid x \mid < 1$, and in that interval, it sums to $\frac{1}{1 - x}$. Outside this interval, the sum grows without bound, meaning the series diverges.
+
+#### Interval of Convergence
+
+For most power series, convergence depends on how far $x$ is from the center $a$. Thus, there exists an interval centered at $a$ where the series converges, and outside of it, the series diverges.
+
+#### Radius of Convergence
+
+The **radius of convergence** $R$ describes the size of this interval.  
+
+- The series **converges absolutely** for $|x - a| < R$,
+- **diverges** for $|x - a| > R$,
+- and may **converge or diverge** at the boundary $|x - a| = R$ (this must be tested separately).
+
+#### Determining the Radius of Convergence
+
+There are two main methods:
+
+##### (a) Ratio Test
+Compute $\lim_{n \to \infty} \left| \frac{c_{n+1}}{c_n} \right| = L$, then $R = \frac{1}{L}.$
+
+##### (b) Root Test
+
+Compute $\lim_{n \to \infty} \sqrt[n]{|c_n|} = L$, then also $R = \frac{1}{L}$.
+
+If $L = 0$, the radius is infinite (series converges for all $x$).  
+If $L = \infty$, the radius is zero (series converges only at $x = a$).
+
+#### Examples
+
+##### Example 1:  
+
+$$
+\sum_{n=0}^\infty x^n = 1 + x + x^2 + x^3 + \dots
+$$
+
+Here $c_n = 1$.  Using the ratio test:
+
+$$
+\lim_{n \to \infty} \left| \frac{c_{n+1}}{c_n} \right| = 1 \Rightarrow R = 1.
+$$
+
+Thus, it converges for $|x| < 1$.
+
+##### Example 2:  
+
+$$
+\sum_{n=0}^\infty \frac{x^n}{n!}
+$$
+
+Here $c_n = 1/n!$. Then:
+
+$$
+\lim_{n \to \infty} \left| \frac{c_{n+1}}{c_n} \right| = \lim_{n \to \infty} \frac{1}{n + 1} = 0,
+$$
+
+so $R = \infty$. This means the exponential series $e^x = \sum \frac{x^n}{n!}$ converges for all $x$.
+
+##### Example 3:
+
+$$
+\sum_{n=1}^\infty \frac{(x - 2)^n}{n}
+$$
+
+Here  
+$$
+c_n = \frac{1}{n}, \quad \lim_{n \to \infty} \left| \frac{c_{n+1}}{c_n} \right| = 1
+\Rightarrow R = 1.
+$$
+So the series converges for $|x - 2| < 1$, i.e., in the interval $(1, 3)$.  
+At $x = 1$ or $3$, one must test separately.
+
+## Convexity
+
+### Definition
+
+Convexity is a key concept in calculus and optimization. It describes the “curvature” or shape of a function and determines how the function behaves regarding straight-line connections between points on its graph.
+
+A real-valued function $f(x)$ defined on an interval is **convex** if, for every pair of points $x_1, x_2$ in its domain and every $t \in$,
+
+$$
+f(tx_1 + (1 - t)x_2) \leq t f(x_1) + (1 - t) f(x_2)
+$$
+
+This means that the line segment connecting the points $(x_1, f(x_1))$ and $(x_2, f(x_2))$ lies **on or above** the graph of the function.  
+
+Visually, a convex function curves upward - it looks like a cup ( $\cup$ ).  
+
+If the inequality is **strict** (i.e., the line is strictly above except at endpoints), the function is **strictly convex**.
+
+### Concavity  
+
+A function is **concave** if the opposite inequality holds:  
+
+$$
+f(tx_1 + (1 - t)x_2) \geq t f(x_1) + (1 - t) f(x_2)
+$$
+
+Concave functions curve downward, like a cap ( $\cap$ ).  
+
+### Second Derivative Test for Convexity  
+
+If the function is twice differentiable, an easy test determines convexity:
+
+- $f''(x) > 0$ on an interval → **strictly convex**
+- $f''(x) = 0$ on an interval → **linear (flat)**
+- $f''(x) < 0$ on an interval → **strictly concave**
+
+Thus, the **second derivative** tells how the slope is changing: in a convex function, slopes are increasing.
+
+### Example  
+
+1. $f(x) = x^2$:  $f''(x) = 2 > 0$ → convex everywhere  
+2. $f(x) = e^x$:  $f''(x) = e^x > 0$ → convex everywhere  
+3. $f(x) = -x^2$:  $f''(x) = -2 < 0$ → concave everywhere  
+
+### Tangent Line Property  
+
+For any **convex** function, the function always lies **above its tangent line**:
+
+$$
+f(x) \geq f(x_0) + f'(x_0)(x - x_0)
+$$
+
+This property shows that the linear approximation (tangent line) always underestimates a convex function.  
+For concave functions, the tangent line **overestimates** the function.
+
+### Optimization and Convexity  
+
+Convex functions are extremely important in optimization because of their nice properties:
+
+- A **local minimum** of a convex function is automatically a **global minimum**.
+- A **strictly convex** function has **at most one** global minimum.
+- Convexity ensures that optimization algorithms (like gradient descent) converge to the correct solution.
+
+### Geometric Intuition  
+
+- For a convex function, the slope $f'(x)$ increases or remains constant.
+- The graph "curves upward," and any chord connecting two points lies **above** the graph.
+- For a concave function, the slope decreases or remains constant, and the chord lies **below** the graph.
+
+
+
+
 # Notations 
 
 | Notation                                 | Description                                                | Example/Meaning                                               |
