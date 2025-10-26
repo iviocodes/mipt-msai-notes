@@ -1809,6 +1809,8 @@ $$
 
 so $R = \infty$. This means the exponential series $e^x = \sum \frac{x^n}{n!}$ converges for all $x$.
 
+***
+
 ##### Example 3:
 
 $$
@@ -1893,6 +1895,243 @@ Convex functions are extremely important in optimization because of their nice p
 - For a concave function, the slope decreases or remains constant, and the chord lies **below** the graph.
 
 
+# Multivariate calculus
+
+Multivariate calculus extends calculus to functions of several variables, such as $f(x, y)$ or $f(x, y, z)$. It provides tools to study how these functions change in space and to find tangent planes, extrema, and curvature behavior.
+
+## Directional Derivative  
+
+The **directional derivative** measures how a function changes as one moves from a point in a specified direction.  
+
+For a differentiable function $f(x, y, z)$, the directional derivative at point $P(x_0, y_0, z_0)$ in the direction of a **unit vector** $\mathbf{u} = \langle a, b, c \rangle$ is defined as:  
+
+$$
+D_{\mathbf{u}} f(x_0, y_0, z_0) = \nabla f(x_0, y_0, z_0) \cdot \mathbf{u}
+$$
+
+### Key Idea
+
+- $D_{\mathbf{u}} f$ gives the **rate of change** of $f$ in direction $\mathbf{u}$.
+- Maximum rate of change occurs **in the direction of the gradient** $\nabla f$.
+
+## Gradient Vector  
+
+The **gradient** of a scalar function $f(x, y, z)$ is the vector of all its first partial derivatives:
+
+$$
+\nabla f(x, y, z) = \left( \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right)
+$$
+
+### Properties 
+
+- Points in the direction of **steepest ascent**.
+- Magnitude $|\nabla f|$ gives the **steepest rate of increase**.
+- It is **orthogonal to level surfaces** of $f$, i.e., surfaces where $f(x, y, z) = c$.
+
+## Taylor Series and Tangent Plane  
+
+The **multivariable Taylor expansion** extends the one-variable Taylor theorem to multiple variables.  
+
+For a function $f(x, y)$ near a point $(a, b)$:
+
+$$
+f(x,y) \approx f(a,b) + f_x(a,b)(x - a) + f_y(a,b)(y - b)
+$$
+
+This linear approximation forms the **equation of the tangent plane** to the surface $z = f(x,y)$ at $(a,b,f(a,b))$.
+
+**Tangent Plane Equation:**
+
+$$
+z - f(a,b) = f_x(a,b)(x - a) + f_y(a,b)(y - b)
+$$
+
+Higher-order approximations include quadratic terms:
+$$
+f(x,y) \approx f(a,b) + f_x(a,b)(x - a) + f_y(a,b)(y - b) + \frac{1}{2}\left[ f_{xx}(a,b)(x - a)^2 + 2f_{xy}(a,b)(x - a)(y - b) + f_{yy}(a,b)(y - b)^2 \right]
+$$
+
+## Jacobian Matrix  
+
+For a **vector-valued function** $\mathbf{F}(x_1, x_2, \ldots, x_n)$ whose output has several components, the **Jacobian matrix** collects all first partial derivatives:
+
+$$
+J_{\mathbf{F}} = 
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\end{bmatrix}
+$$
+
+### Uses
+
+- Describes **rate of change** of a vector function.
+- Used in **linear transformations**, **coordinate changes**, and **multivariable chain rule**.
+- The **Jacobian determinant** measures **volume distortion** caused by transformation.
+
+## Hessian Matrix  
+
+The **Hessian matrix** is the square matrix of all second-order partial derivatives of a scalar function $f(x_1, x_2, \ldots, x_n)$:
+
+$$
+H(f) = 
+\begin{bmatrix}
+f_{x_1x_1} & f_{x_1x_2} & \cdots & f_{x_1x_n} \\
+f_{x_2x_1} & f_{x_2x_2} & \cdots & f_{x_2x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+f_{x_nx_1} & f_{x_nx_2} & \cdots & f_{x_nx_n}
+\end{bmatrix}
+$$
+
+### Role
+
+- Used in second derivative test for **extrema** of multivariable functions.
+- Determines if a critical point is a minimum, maximum, or **saddle point**.
+
+## Critical Points, Extrema, and Saddle Points  
+
+In multivariable calculus, we study how functions of several variables behave near points where their rates of change vanish or change direction. These are called **critical points**, and they help locate where a function may reach a **minimum**, **maximum**, or a **saddle point**.
+
+### What Is a Critical Point?
+
+For a scalar function $f(x, y)$ (or $f(x, y, z)$), a **critical point** is any point where  
+
+$$
+\nabla f = \left( \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \dots \right) = \mathbf{0}
+$$  
+
+or where the partial derivatives **do not exist**.  
+
+This means all first-order partial derivatives vanish:  
+
+$$
+f_x = 0, \quad f_y = 0, \quad (\text{and } f_z = 0 \text{ if needed})
+$$  
+
+Such points are **stationary** — the function has no instantaneous change in any direction.
+
+### Types of Critical Points  
+
+Once a critical point is found, it can be categorized as one of:  
+
+- **Local minimum:** the function has the smallest value in a neighborhood.  
+- **Local maximum:** the function has the largest value in a neighborhood.  
+- **Saddle point:** the function increases in some directions and decreases in others.  
+
+Example of a saddle:  
+
+$$
+f(x, y) = x^2 - y^2
+$$
+
+At $(0, 0)$, $f_x = f_y = 0$, but the point is not an extremum because $f$ has both upward and downward curvature.
+
+
+### Second Derivative (Hessian) Test  
+
+To classify a critical point, we use the **second-order partial derivatives** collected into the **Hessian matrix**:
+
+$$
+H(f) =
+\begin{bmatrix}
+f_{xx} & f_{xy} \\
+f_{yx} & f_{yy}
+\end{bmatrix}
+$$
+
+For functions of two variables, define the **discriminant** (also called **D**):
+
+$$
+D = f_{xx} f_{yy} - (f_{xy})^2
+$$
+
+Then classify the critical point $(x_0, y_0)$ as follows:
+
+| Case                     | Condition     | Interpretation            |
+| ------------------------ | ------------- | ------------------------- |
+| $$ D > 0,\ f_{xx} > 0 $$ | Local Minimum | Surface curves upward     |
+| $$ D > 0,\ f_{xx} < 0 $$ | Local Maximum | Surface curves downward   |
+| $$ D < 0 $$              | Saddle Point  | Mixed curvature           |
+| $$ D = 0 $$              | Inconclusive  | Higher derivatives needed |
+
+
+### Graphical Intuition  
+
+- At a **minimum**, the surface looks like a bowl ($\cup$).  
+- At a **maximum**, the surface looks like an upside-down bowl ($\cap$).  
+- At a **saddle**, it curves in opposite ways — one direction up, one down.  
+
+The level curves (contour maps) of $f(x, y)$ also help visualize this:
+
+- Circles contracting → minimum.  
+- Circles expanding → maximum.  
+- Hyperbolas crossing → saddle point.
+
+### Example  
+
+Let  
+
+$$
+f(x, y) = x^2 + y^2 - 4x - 6y
+$$
+
+**Step 1: Find Critical Point**
+$$
+f_x = 2x - 4 = 0, \quad f_y = 2y - 6 = 0
+\Rightarrow (x, y) = (2, 3)
+$$
+
+**Step 2: Compute Second Derivatives**
+$$
+f_{xx} = 2, \quad f_{yy} = 2, \quad f_{xy} = 0
+$$
+
+**Step 3: Evaluate Determinant**
+$$
+D = (2)(2) - 0^2 = 4 > 0, \quad f_{xx} = 2 > 0
+$$
+
+Thus, $(2, 3)$ is a **local minimum**.  
+
+### Example 2: Saddle Point  
+
+Let  
+
+$$
+f(x, y) = x^2 - y^2
+$$
+
+$$
+f_x = 2x, \quad f_y = -2y \Rightarrow (0, 0)
+$$
+
+$$
+f_{xx} = 2, \quad f_{yy} = -2, \quad f_{xy} = 0
+$$
+
+$$
+D = (2)(-2) - 0^2 = -4 < 0
+$$
+
+So $(0, 0)$ is a **saddle point**.
+
+### For 3 or More Variables  
+
+For $f(x, y, z)$, classification uses the **Hessian matrix** and properties of its **eigenvalues**:  
+
+- All eigenvalues positive → local minimum.  
+- All eigenvalues negative → local maximum.  
+- Mixed signs → saddle point.  
+
+In practice, computing $f_{xx}, f_{yy}, f_{zz}$ and cross-derivatives, then checking eigenvalue signs, tells the curvature in each direction.
+
+### Relation to Gradient and Optimization  
+
+- Critical points occur at $\nabla f = 0$.  
+- The gradient $\nabla f$ gives the direction of **steepest ascent**.  
+- At minima or maxima, this direction vanishes → the surface is flat locally.  
+- Hessian determines local curvature around flatness, distinguishing min/max/saddle.
 
 
 # Notations 
