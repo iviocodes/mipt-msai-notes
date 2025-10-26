@@ -2134,6 +2134,157 @@ In practice, computing $f_{xx}, f_{yy}, f_{zz}$ and cross-derivatives, then chec
 - Hessian determines local curvature around flatness, distinguishing min/max/saddle.
 
 
+# Integration
+
+Integration is a central concept in calculus, representing the accumulation of quantities or the area under curves. It’s the inverse process of differentiation and connects discrete summation with continuous accumulation through limits.
+
+## The Riemann Integral  
+
+### Definition  
+
+Let $f(x)$ be a real function defined on a closed interval $[a, b]$.  
+Partition the interval into $n$ subintervals of width $\Delta x_i = x_i - x_{i-1}$. In each subinterval, choose a point $c_i$. Then form the **Riemann sum**:
+
+$$
+S(f, P) = \sum_{i=1}^{n} f(c_i) \, \Delta x_i
+$$
+
+If this sum approaches a fixed number $L$ as the maximum subinterval width $|P| = \max \Delta x_i$ approaches 0, then $f$ is **Riemann integrable**, and
+
+$$L = \int_{a}^{b} f(x)\,dx$$
+
+This represents the total accumulated area between the curve $y = f(x)$ and the x-axis from $x = a$ to $x = b$.  
+
+### Geometric Interpretation  
+
+- If $f(x) \ge 0$: the integral gives the **area under the graph**.  
+- If $f(x)$ takes negative values: the integral gives the **net signed area** (positive above axis, negative below).
+
+### Properties of the Riemann Integral
+
+1. **Linearity:**
+   $$
+   \int_a^b (c_1 f(x) + c_2 g(x))\, dx = c_1 \int_a^b f(x)\, dx + c_2 \int_a^b g(x)\, dx
+   $$
+
+2. **Additivity:**
+   $$
+   \int_a^b f(x)\, dx = \int_a^c f(x)\, dx + \int_c^b f(x)\, dx
+   $$
+
+3. **Monotonicity:**
+   If $f(x) \le g(x)$ for all $x \in [a,b]$, then
+   $$
+   \int_a^b f(x)\, dx \le \int_a^b g(x)\, dx
+   $$
+
+4. **Reversal of limits:**
+   $$
+   \int_a^b f(x)\,dx = - \int_b^a f(x)\,dx
+   $$
+
+5. **Zero-width intervals:**
+   $$
+   \int_a^a f(x)\, dx = 0
+   $$
+
+## The Integral as an Antiderivative  
+
+Integration is the **inverse operation of differentiation**.  
+If $F'(x) = f(x)$, then $F(x)$ is called an **antiderivative** (or **primitive**) of $f(x)$.  
+
+Thus, $\int f(x)\, dx = F(x) + C$, where $C$ is an arbitrary constant (since differentiation removes constants).
+
+For example: $\int 3x^2\, dx = x^3 + C$, because $\frac{d}{dx}(x^3) = 3x^2.$
+
+## Definite and Indefinite Integrals  
+
+- **Indefinite Integral:** Represents a family of antiderivatives:
+  $$
+  \int f(x)\, dx = F(x) + C
+  $$
+
+- **Definite Integral:** Represents a number — the net area or accumulated value between two points $a$ and $b$:
+  $$
+  \int_a^b f(x)\, dx = F(b) - F(a)
+  $$
+
+## Limits of Integration  
+
+- **Lower limit:** $a$ - the starting point of the interval.
+- **Upper limit:** $b$ - the endpoint.
+- Changing limits reverses sign: $\int_b^a f(x)\,dx = -\int_a^b f(x)\,dx$
+- The definite integral depends **only** on the endpoints, not the path between them.
+
+## The Fundamental Theorem of Calculus  
+
+The Fundamental Theorem connects differentiation and integration into one unified principle.
+
+### Part 1 (Derivative of Integral)
+
+If $f$ is continuous on $[a,b]$, define $F(x) = \int_a^x f(t)\, dt$. Then $F'(x) = f(x)$.
+
+### Part 2 (Evaluation of Integral)
+
+If $F$ is any antiderivative of $f$, $\int_a^b f(x)\, dx = F(b) - F(a)$. This result allows computation of a definite integral by finding **any** antiderivative.
+
+## Integration Techniques  
+
+### a) Integration by Parts  
+
+Derived from the product rule of differentiation $(uv)' = u'v + uv'$:
+
+$$
+\int u\, dv = uv - \int v\, du
+$$
+
+**Procedure:**
+
+1. Identify $u$ and $dv$.  
+2. Compute $du$ and $v = \int dv$.  
+3. Substitute into formula.  
+
+**Example:**
+$$
+\int x e^x dx = x e^x - \int e^x dx = e^x(x - 1) + C
+$$
+
+### b) Change of Variable (Substitution)  
+
+Used to simplify integrals by substituting a new variable.  
+If $u = g(x)$, then:
+
+$$
+\int f(g(x))g'(x)\, dx = \int f(u)\, du
+$$
+
+**Example:**
+$$
+\int 2x \cos(x^2)\, dx
+$$
+Let $u = x^2$, so $du = 2x\, dx$. Then
+$$
+\int \cos(u)\, du = \sin(u) + C = \sin(x^2) + C
+$$
+
+### c) Change of Variable in Definite Integrals  
+
+When integrating with limits, adjust them based on substitution:
+$$
+\int_a^b f(g(x))g'(x)\, dx = \int_{g(a)}^{g(b)} f(u)\, du
+$$
+
+## Applications  
+
+- **Area under curves:** Between $f(x)$ and the x-axis.  
+- **Accumulated quantity:** Work, distance, charge.  
+- **Average value of functions:**  
+  $$
+  f_{\text{avg}} = \frac{1}{b-a} \int_a^b f(x) \, dx
+  $$
+- **Economic, physical, and probabilistic modeling.**
+
+
 # Notations 
 
 | Notation                                 | Description                                                | Example/Meaning                                               |
